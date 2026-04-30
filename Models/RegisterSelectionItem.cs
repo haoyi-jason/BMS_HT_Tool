@@ -1,0 +1,13 @@
+namespace BmsHostUi.Models
+{
+    public sealed class RegisterSelectionItem
+    {
+        public int Index { get; set; }
+        public string Name { get; set; }
+
+        public string DisplayText
+        {
+            get { return Index + " " + Name; }
+        }
+    }
+}

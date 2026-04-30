@@ -1,0 +1,99 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="WindowTitle">Grididea BMS HT 工具</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelCOM">通訊埠</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelRefresh">重新整理</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelBaud">鮑率</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelSlave">從站位址</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelPeriod">週期(秒)</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelCsv">CSV</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelBrowse">瀏覽</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelConnect">連線</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelStart">開始</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelStop">停止</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelDisconnect">斷線</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLang">EN/中</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="GroupY1">Y1 暫存器</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="GroupPlot">即時圖表區</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="GroupY2">Y2 暫存器</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelAccumulate">累積顯示</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelHexDisplay">16進位顯示</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLoadLogPlot">載入記錄繪圖</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLatestN">顯示最新筆數</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelY1">Y1</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelY2">Y2</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelAuto">自動</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelMin">最小值</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelMax">最大值</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelStatus">狀態：</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TabLiveData">即時資料</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TabDf">DF 參數</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColModbusRegister">Modbus 暫存器</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColName">名稱</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColValue">數值</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColUnit">單位</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColTimestamp">時間戳記</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelReadDf">讀取全部 DF</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelWriteDf">寫入全部 DF</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelReadOne">讀取單筆</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelWriteOne">寫入單筆</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelKey">金鑰</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelWriteKey">寫入金鑰</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelSearch">搜尋</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLoadCsv">載入 CSV</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelSaveCsv">儲存 CSV</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelOwner">擁有者</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelRepo">儲存庫</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelCheckUpdate">檢查更新</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColSymbol">符號</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColAddress">位址</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColType">類型</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="HintSelectRegs">請選擇 Y1/Y2 暫存器以繪圖</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="StatusIdle">待命</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgSelectCom">請先選擇 COM 埠。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCsvOverwriteConfirm">CSV 已存在，是否覆蓋？</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleCsvConfirm">CSV 確認</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgStartCanceled">使用者已取消啟動。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingStarted">輪詢已開始。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingWarningFmt">輪詢警告：{0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingStopped">輪詢已停止。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDisconnected">已斷線。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgLastPollFmt">最後輪詢：{0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfReadCompleted">DF 讀取完成。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfWriteConfirm">是否將目前參數全部寫入 BMS DataFlash？</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleDfWriteConfirm">DF 寫入確認</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfWriteCompleted">DF 寫入完成（含回讀驗證）。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfSingleReadFmt">DF 單筆讀取完成：{0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfSingleWriteFmt">DF 單筆寫入完成：{0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfCsvNotFound">找不到 DF CSV 檔案。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfCsvEmpty">DF CSV 內容為空。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfCsvLoadedFmt">DF CSV 載入完成：{0} 筆。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfCsvPathRequired">請先指定 DF CSV 路徑。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfCsvSavedFmt">DF CSV 已儲存：{0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrLogCsvNotFound">找不到即時紀錄 CSV 檔案。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrLogCsvEmpty">即時紀錄 CSV 內容為空。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgLogLoadedFmt">已載入紀錄並重建圖形：{0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfKeyWritten">DF 金鑰已寫入暫存器 99。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfKeyRequired">請先輸入 DF 金鑰。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPortsRefreshed">通訊埠已重新整理。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgLogCsvPathSelected">已選擇即時紀錄 CSV 路徑。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfCsvPathSelected">已選擇 DF CSV 路徑。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgErrorFmt">錯誤：{0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleHostUiError">Host UI 錯誤</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrGithubRepoRequired">請先設定 GitHub 擁有者與儲存庫。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCheckingUpdate">正在檢查更新...</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgNoUpdate">目前已是最新版本。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgUpdateAvailableFmt">發現新版本 {0}，是否立即下載並安裝？</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleUpdateAvailable">可用更新</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgUpdateSkipped">已略過更新。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDownloadingUpdate">正在下載更新安裝檔...</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgOpenedReleasePage">已開啟發行頁面供手動下載。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrUpdateAssetMissing">最新版本找不到可下載的安裝檔。</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgUpdateInstallerStarted">更新安裝程式已啟動。</sys:String>
+</ResourceDictionary>

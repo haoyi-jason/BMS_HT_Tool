@@ -1,0 +1,99 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="WindowTitle">Grididea BMS HT Tool</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelCOM">COM</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelRefresh">Refresh</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelBaud">Baud</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelSlave">Slave</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelPeriod">Period(s)</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelCsv">CSV</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelBrowse">Browse</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelConnect">Connect</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelStart">Start</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelStop">Stop</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelDisconnect">Disconnect</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLang">中/EN</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="GroupY1">Y1 Registers</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="GroupPlot">Realtime Plot Area</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="GroupY2">Y2 Registers</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelAccumulate">Accumulate</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelHexDisplay">HEX Display</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLoadLogPlot">Load Log Plot</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLatestN">Latest N</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelY1">Y1</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelY2">Y2</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelAuto">Auto</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelMin">Min</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelMax">Max</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelStatus">Status:</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TabLiveData">Live Data</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TabDf">DF Parameters</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColModbusRegister">Modbus Register</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColName">Name</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColValue">Value</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColUnit">Unit</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColTimestamp">Timestamp</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelReadDf">Read DF</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelWriteDf">Write DF</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelReadOne">Read One</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelWriteOne">Write One</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelKey">Key</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelWriteKey">Write Key</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelSearch">Search</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelLoadCsv">Load CSV</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelSaveCsv">Save CSV</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelOwner">Owner</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelRepo">Repo</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="LabelCheckUpdate">Check Update</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColSymbol">Symbol</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColAddress">Address</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ColType">Type</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="HintSelectRegs">Select Y1/Y2 registers to plot</sys:String>
+
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="StatusIdle">Idle</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgSelectCom">Please select COM port.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCsvOverwriteConfirm">CSV already exists. Overwrite it?</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleCsvConfirm">CSV Confirm</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgStartCanceled">Start canceled by user.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingStarted">Polling started.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingWarningFmt">Polling warning: {0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingStopped">Polling stopped.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDisconnected">Disconnected.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgLastPollFmt">Last poll: {0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfReadCompleted">DF read completed.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfWriteConfirm">Write all parameter values to BMS DataFlash?</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleDfWriteConfirm">DF Write Confirm</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfWriteCompleted">DF write completed (with readback verify).</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfSingleReadFmt">DF single read completed: {0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfSingleWriteFmt">DF single write completed: {0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfCsvNotFound">DF CSV file not found.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfCsvEmpty">DF CSV is empty.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfCsvLoadedFmt">DF CSV loaded: {0} items.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfCsvPathRequired">Please provide DF CSV path.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfCsvSavedFmt">DF CSV saved: {0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrLogCsvNotFound">Live log CSV file not found.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrLogCsvEmpty">Live log CSV is empty.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgLogLoadedFmt">Live log loaded for plot: {0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfKeyWritten">DF key written to register 99.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrDfKeyRequired">Please input DF key first.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPortsRefreshed">Ports refreshed.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgLogCsvPathSelected">Log CSV path selected.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDfCsvPathSelected">DF CSV path selected.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgErrorFmt">Error: {0}</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleHostUiError">Host UI Error</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrGithubRepoRequired">Please set GitHub owner/repo first.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCheckingUpdate">Checking updates...</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgNoUpdate">Already up to date.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgUpdateAvailableFmt">New version {0} is available. Download and install now?</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleUpdateAvailable">Update Available</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgUpdateSkipped">Update skipped.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgDownloadingUpdate">Downloading update installer...</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgOpenedReleasePage">Opened release page for manual download.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ErrUpdateAssetMissing">No downloadable installer found in latest release.</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgUpdateInstallerStarted">Update installer started.</sys:String>
+</ResourceDictionary>

@@ -1,0 +1,32 @@
+# Build outputs
+bin/
+obj/
+
+# Installer artifacts (built locally; upload only the final .exe to GitHub Releases)
+dist/installer/payload/
+dist/installer/build/
+dist/installer/*.exe
+
+# Visual Studio / Rider
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.sln.ide/
+.idea/
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+
+# Logs & temp
+*.log
+*.tmp
+Thumbs.db
+desktop.ini
+
+# OS
+.DS_Store
