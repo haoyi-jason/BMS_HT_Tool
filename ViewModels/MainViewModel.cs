@@ -121,8 +121,8 @@ namespace BmsHostUi.ViewModels
             DfCsvPath = ResolveTemplateCsvPath();
             IsHexDisplay = false;
             var appSettings = _appSettingsService.Load();
-            GitHubOwner = appSettings.GitHubOwner ?? string.Empty;
-            GitHubRepo = appSettings.GitHubRepo ?? string.Empty;
+            GitHubOwner = appSettings.GitHubOwner ?? "haoyi-jason";
+            GitHubRepo = appSettings.GitHubRepo ?? "BMS_HY_Tool";
 
             LeftRegisters = new ObservableCollection<RegisterSelectionItem>(
                 LiveMap.Select((x, i) => new RegisterSelectionItem
