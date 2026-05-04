@@ -5,6 +5,9 @@
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
     <AssemblyName>Grididea BMS HT Tool</AssemblyName>
     <RootNamespace>BmsHostUi</RootNamespace>
   </PropertyGroup>
