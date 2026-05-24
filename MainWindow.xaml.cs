@@ -43,6 +43,7 @@ namespace BmsHostUi
 
             SizeChanged += (_, __) => RenderPlot();
             Loaded += (_, __) => RenderPlot();
+                    KeyDown += MainWindow_KeyDown;
         }
 
         private MainViewModel ViewModel
@@ -331,6 +332,16 @@ namespace BmsHostUi
         private static Brush GetSeriesBrush(int seriesIndex)
         {
             return SeriesPalette[Math.Abs(seriesIndex) % SeriesPalette.Length];
+        }
+
+        private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if ((e.Key == System.Windows.Input.Key.H)
+                && (System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) == System.Windows.Input.ModifierKeys.Control)
+            {
+                // Toggle Owner/Repo field visibility - feature stub for future implementation
+                e.Handled = true;
+            }
         }
 
         private void ToggleLanguage_Click(object sender, RoutedEventArgs e)

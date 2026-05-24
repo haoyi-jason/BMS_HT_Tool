@@ -8,10 +8,14 @@
         Title="{DynamicResource WindowTitle}" Height="780" Width="1300" MinWidth="1100" MinHeight="700">
     <Window.Resources>
         <conv:SeriesColorConverter x:Key="SeriesColorConverter"/>
+        <conv:BitStateToBrushConverter x:Key="BitStateToBrushConverter"/>
+        <conv:BitStateToFontWeightConverter x:Key="BitStateToFontWeightConverter"/>
     </Window.Resources>
 
     <Grid Margin="12">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="8"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="8"/>
             <RowDefinition Height="*"/>
@@ -19,59 +23,70 @@
             <RowDefinition Height="220"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Padding="10" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="6">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="260"/>
-                    <ColumnDefinition Width="18"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource LabelCOM}"/>
-                <ComboBox Grid.Column="1" ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort}"/>
-                <Button Grid.Column="2" Padding="8,2" Command="{Binding RefreshPortsCommand}" Content="{DynamicResource LabelRefresh}"/>
-
-                <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource LabelBaud}"/>
-                <TextBox Grid.Column="4" Text="{Binding BaudRate}"/>
-
-                <TextBlock Grid.Column="6" VerticalAlignment="Center" Text="{DynamicResource LabelSlave}"/>
-                <TextBox Grid.Column="7" Text="{Binding SlaveId}"/>
-
-                <TextBlock Grid.Column="9" VerticalAlignment="Center" Text="{DynamicResource LabelPeriod}"/>
-                <TextBox Grid.Column="10" Text="{Binding PollPeriodSeconds}"/>
-
-                <TextBlock Grid.Column="12" VerticalAlignment="Center" Text="{DynamicResource LabelCsv}"/>
-                <StackPanel Grid.Column="13" Orientation="Horizontal">
-                    <TextBox Width="190" Text="{Binding CsvPath}"/>
-                    <Button Margin="6,0,0,0" Padding="8,2" Command="{Binding BrowseCsvPathCommand}" Content="{DynamicResource LabelBrowse}"/>
-                </StackPanel>
-
-                <Button Grid.Column="15" Margin="0,0,8,0" Padding="12,4" Command="{Binding ConnectCommand}" Content="{DynamicResource LabelConnect}"/>
-                <Button Grid.Column="16" Margin="0,0,8,0" Padding="12,4" Command="{Binding StartCommand}" Content="{DynamicResource LabelStart}"/>
-                <Button Grid.Column="17" Margin="0,0,8,0" Padding="12,4" Command="{Binding StopCommand}" Content="{DynamicResource LabelStop}"/>
-                <Button Grid.Column="18" Margin="0,0,8,0" Padding="12,4" Command="{Binding DisconnectCommand}" Content="{DynamicResource LabelDisconnect}" HorizontalAlignment="Left"/>
-                <Button Grid.Column="19" Padding="10,4" Click="ToggleLanguage_Click" Content="{DynamicResource LabelLang}" HorizontalAlignment="Left"/>
-            </Grid>
+        <!-- Logo Header -->
+        <Border Grid.Row="0" Padding="10" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="6" Background="#FAFAFA">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Assets/昊易有限公司06.png" Height="40" Margin="0,0,16,0" VerticalAlignment="Center"/>
+                <TextBlock Text="Grididea BMS HT Tool" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+            </StackPanel>
         </Border>
 
-        <Grid Grid.Row="2">
+        <Border Grid.Row="2" Padding="10" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="6">
+            <StackPanel Orientation="Vertical">
+                <!-- Row 1: COM / Baud / Slave / Period / LOG CSV / Connect / Start / Stop / Lang -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="260"/>
+                        <ColumnDefinition Width="18"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource LabelCOM}"/>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort}"/>
+                    <Button Grid.Column="2" Padding="8,2" Command="{Binding RefreshPortsCommand}" Content="{DynamicResource LabelRefresh}"/>
+
+                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource LabelBaud}"/>
+                    <TextBox Grid.Column="4" Text="{Binding BaudRate}"/>
+
+                    <TextBlock Grid.Column="6" VerticalAlignment="Center" Text="{DynamicResource LabelSlave}"/>
+                    <TextBox Grid.Column="7" Text="{Binding SlaveId}"/>
+
+                    <TextBlock Grid.Column="9" VerticalAlignment="Center" Text="{DynamicResource LabelPeriod}"/>
+                    <TextBox Grid.Column="10" Text="{Binding PollPeriodSeconds}"/>
+
+                    <TextBlock Grid.Column="12" VerticalAlignment="Center" Text="LOG CSV"/>
+                    <StackPanel Grid.Column="13" Orientation="Horizontal">
+                        <TextBox Width="190" Text="{Binding CsvPath}"/>
+                        <Button Margin="6,0,0,0" Padding="8,2" Command="{Binding BrowseCsvPathCommand}" Content="{DynamicResource LabelBrowse}"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="15" Margin="0,0,8,0" Padding="12,4" Command="{Binding ConnectToggleCommand}" Content="{Binding ConnectButtonText}" Name="ConnectBtn"/>
+                    <Button Grid.Column="16" Margin="0,0,8,0" Padding="12,4" Command="{Binding StartCommand}" Content="{DynamicResource LabelStart}"/>
+                    <Button Grid.Column="17" Margin="0,0,8,0" Padding="12,4" Command="{Binding StopCommand}" Content="{DynamicResource LabelStop}"/>
+                    <Button Grid.Column="19" Padding="10,4" Click="ToggleLanguage_Click" Content="{DynamicResource LabelLang}" HorizontalAlignment="Left"/>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="8*"/>
@@ -103,6 +118,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Border Margin="8" BorderBrush="#B0B0B0" BorderThickness="1" CornerRadius="4" Background="#FAFAFA">
                         <Canvas x:Name="PlotCanvas" Background="#FAFAFA"/>
@@ -128,6 +144,74 @@
                         <TextBlock Margin="16,0,0,0" VerticalAlignment="Center" Text="{DynamicResource LabelStatus}"/>
                         <TextBlock Margin="6,0,0,0" VerticalAlignment="Center" Text="{Binding StatusText}"/>
                     </StackPanel>
+                    
+                    <!-- Status display row [A][B][C] -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="8,0,8,8">
+                        <Border BorderBrush="#808080" BorderThickness="1" Padding="8,4" CornerRadius="3" Margin="0,0,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="FW Rev: " FontWeight="Bold"/>
+                                <TextBlock Text="{Binding FirmwareVersion}"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="#808080" BorderThickness="1" Padding="4,4" CornerRadius="3" Margin="0,0,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="CHG" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=0}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=0}"/>
+                                <TextBlock Text="DHG" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=1}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=1}"/>
+                                <TextBlock Text="NTC" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=2}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=2}"/>
+                                <TextBlock Text="PCHGF" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=3}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=3}"/>
+                                <TextBlock Text="PDHGF" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=4}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=4}"/>
+                                <TextBlock Text="WARN1" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=5}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=5}"/>
+                                <TextBlock Text="WARN2" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=6}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=6}"/>
+                                <TextBlock Text="SP"
+                                           Foreground="{Binding BatteryStateRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=7}"
+                                           FontWeight="{Binding BatteryStateRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=7}"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="#808080" BorderThickness="1" Padding="4,4" CornerRadius="3">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="CHG" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=0}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=0}"/>
+                                <TextBlock Text="DHG" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=1}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=1}"/>
+                                <TextBlock Text="FCC" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=2}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=2}"/>
+                                <TextBlock Text="OCP" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=3}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=3}"/>
+                                <TextBlock Text="OVP" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=4}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=4}"/>
+                                <TextBlock Text="UVP" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=5}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=5}"/>
+                                <TextBlock Text="OTP" Margin="0,0,4,0"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=6}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=6}"/>
+                                <TextBlock Text="UTP"
+                                           Foreground="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToBrushConverter}, ConverterParameter=7}"
+                                           FontWeight="{Binding BatteryFlagsRaw, Converter={StaticResource BitStateToFontWeightConverter}, ConverterParameter=7}"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
                 </Grid>
             </GroupBox>
 
@@ -152,7 +236,7 @@
             </GroupBox>
         </Grid>
 
-        <TabControl Grid.Row="4">
+        <TabControl Grid.Row="6">
             <TabItem Header="{DynamicResource TabLiveData}">
                 <DataGrid ItemsSource="{Binding LiveRows}" AutoGenerateColumns="False" IsReadOnly="True" Margin="8">
                     <DataGrid.Columns>
@@ -168,6 +252,7 @@
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="8"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -182,19 +267,19 @@
                         <Button Content="{DynamicResource LabelWriteKey}" Command="{Binding WriteKeyCommand}" Padding="12,4" Margin="0,0,8,0"/>
                         <TextBlock VerticalAlignment="Center" Text="{DynamicResource LabelSearch}" Margin="8,0,6,0"/>
                         <TextBox Width="180" Text="{Binding DfFilterText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,8,0"/>
-                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LabelCsv}" Margin="8,0,6,0"/>
-                        <TextBox Width="260" Text="{Binding DfCsvPath}" Margin="0,0,8,0"/>
-                        <Button Content="{DynamicResource LabelBrowse}" Command="{Binding BrowseDfCsvPathCommand}" Padding="12,4" Margin="0,0,8,0"/>
                         <Button Content="{DynamicResource LabelLoadCsv}" Command="{Binding LoadDfCsvCommand}" Padding="12,4" Margin="0,0,8,0"/>
                         <Button Content="{DynamicResource LabelSaveCsv}" Command="{Binding SaveDfCsvCommand}" Padding="12,4" Margin="0,0,8,0"/>
-                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LabelOwner}" Margin="8,0,6,0"/>
-                        <TextBox Width="120" Text="{Binding GitHubOwner}" Margin="0,0,8,0"/>
-                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LabelRepo}" Margin="8,0,6,0"/>
-                        <TextBox Width="150" Text="{Binding GitHubRepo}" Margin="0,0,8,0"/>
                         <Button Content="{DynamicResource LabelCheckUpdate}" Command="{Binding CheckUpdateCommand}" Padding="12,4"/>
                     </StackPanel>
 
-                    <DataGrid Grid.Row="2" ItemsSource="{Binding ParameterRowsView}" SelectedItem="{Binding SelectedParameter}" AutoGenerateColumns="False">
+                    <!-- Row 2: PARAMS CSV path (read-only display) -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="PARAMS CSV" Margin="0,0,6,0"/>
+                        <TextBox Width="420" IsReadOnly="True" Text="{Binding DfCsvPath, Mode=OneWay}" Background="#F5F5F5"/>
+                        <TextBlock VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#404040" Text="{Binding DfCsvStatusText, Mode=OneWay}"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Row="3" ItemsSource="{Binding ParameterRowsView}" SelectedItem="{Binding SelectedParameter}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{DynamicResource ColSymbol}" Binding="{Binding Name}" Width="*"/>
                             <DataGridTextColumn Header="{DynamicResource ColAddress}" Binding="{Binding AddressHex}" Width="120"/>

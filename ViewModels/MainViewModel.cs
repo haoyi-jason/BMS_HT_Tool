@@ -68,6 +68,13 @@ namespace BmsHostUi.ViewModels
             new LiveMapItem { Name = "CHARGE_VOLT", Unit = "mV", Type = "U16" },
         };
 
+        private static readonly HashSet<string> AutoManagedLiveSymbols = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "BATTERY_STATE",
+            "BATTERY_FLAGS",
+            "FW_VER",
+        };
+
         private readonly IModbusService _modbusService;
         private readonly CsvLoggerService _csvLoggerService;
         private readonly GitHubUpdateService _updateService;
@@ -89,11 +96,16 @@ namespace BmsHostUi.ViewModels
         private string _dataFlashKeyText;
         private string _csvPath;
         private string _dfCsvPath;
+        private string _dfCsvStatusText;
         private string _dfFilterText;
         private bool _isHexDisplay;
         private string _githubOwner;
         private string _githubRepo;
         private ParameterRow _selectedParameter;
+        private string _firmwareVersion = "N/A";
+        private string _connectButtonText = "Connect";
+        private int _batteryStateRaw;
+        private int _batteryFlagsRaw;
 
         public MainViewModel(IModbusService modbusService, CsvLoggerService csvLoggerService)
         {
@@ -119,22 +131,29 @@ namespace BmsHostUi.ViewModels
             Y2Max = 5000;
             DataFlashKeyText = string.Empty;
             DfCsvPath = ResolveTemplateCsvPath();
+            DfCsvStatusText = string.Empty;
             IsHexDisplay = false;
             var appSettings = _appSettingsService.Load();
             GitHubOwner = appSettings.GitHubOwner ?? "haoyi-jason";
             GitHubRepo = appSettings.GitHubRepo ?? "BMS_HY_Tool";
+            _connectButtonText = "Connect";
+            _firmwareVersion = "N/A";
 
             LeftRegisters = new ObservableCollection<RegisterSelectionItem>(
-                LiveMap.Select((x, i) => new RegisterSelectionItem
+                LiveMap.Select((x, i) => new { Item = x, Index = i })
+                .Where(x => !AutoManagedLiveSymbols.Contains(x.Item.Name))
+                .Select(x => new RegisterSelectionItem
                 {
-                    Index = i,
-                    Name = x.Name
+                    Index = x.Index,
+                    Name = x.Item.Name
                 }));
             RightRegisters = new ObservableCollection<RegisterSelectionItem>(
-                LiveMap.Select((x, i) => new RegisterSelectionItem
+                LiveMap.Select((x, i) => new { Item = x, Index = i })
+                .Where(x => !AutoManagedLiveSymbols.Contains(x.Item.Name))
+                .Select(x => new RegisterSelectionItem
                 {
-                    Index = i,
-                    Name = x.Name
+                    Index = x.Index,
+                    Name = x.Item.Name
                 }));
             LiveRows = new ObservableCollection<LiveDataRow>(
                 LiveMap.Select((item, index) => new LiveDataRow
@@ -151,8 +170,7 @@ namespace BmsHostUi.ViewModels
             ParameterRowsView = CollectionViewSource.GetDefaultView(ParameterRows);
             ParameterRowsView.Filter = FilterParameterRow;
 
-            ConnectCommand = new RelayCommand(() => RunCommand(ConnectAsync));
-            DisconnectCommand = new RelayCommand(() => RunCommand(DisconnectAsync), () => _modbusService.IsConnected && !_isBusy);
+            ConnectToggleCommand = new RelayCommand(() => RunCommand(_modbusService.IsConnected ? DisconnectAsync : ConnectAsync), () => !_isBusy);
             StartCommand = new RelayCommand(() => RunCommand(StartAsync), () => _modbusService.IsConnected && !_isRunning && !_isBusy);
             StopCommand = new RelayCommand(() => RunCommand(StopAsync), () => _isRunning);
             ReadParamsCommand = new RelayCommand(() => RunCommand(ReadAllParametersAsync), () => _modbusService.IsConnected && !_isRunning && !_isBusy);
@@ -176,8 +194,7 @@ namespace BmsHostUi.ViewModels
         public ObservableCollection<ParameterRow> ParameterRows { get; }
         public ICollectionView ParameterRowsView { get; }
 
-        public ICommand ConnectCommand { get; }
-        public ICommand DisconnectCommand { get; }
+        public ICommand ConnectToggleCommand { get; }
         public ICommand StartCommand { get; }
         public ICommand StopCommand { get; }
         public ICommand ReadParamsCommand { get; }
@@ -226,6 +243,21 @@ namespace BmsHostUi.ViewModels
 
                 _dfCsvPath = value;
                 OnPropertyChanged(nameof(DfCsvPath));
+            }
+        }
+
+        public string DfCsvStatusText
+        {
+            get { return _dfCsvStatusText; }
+            set
+            {
+                if (_dfCsvStatusText == value)
+                {
+                    return;
+                }
+
+                _dfCsvStatusText = value;
+                OnPropertyChanged(nameof(DfCsvStatusText));
             }
         }
 
@@ -426,6 +458,66 @@ namespace BmsHostUi.ViewModels
             }
         }
 
+        public string ConnectButtonText
+        {
+            get { return _connectButtonText; }
+            private set
+            {
+                if (_connectButtonText == value)
+                {
+                    return;
+                }
+
+                _connectButtonText = value;
+                OnPropertyChanged(nameof(ConnectButtonText));
+            }
+        }
+
+        public string FirmwareVersion
+        {
+            get { return _firmwareVersion; }
+            private set
+            {
+                if (_firmwareVersion == value)
+                {
+                    return;
+                }
+
+                _firmwareVersion = value;
+                OnPropertyChanged(nameof(FirmwareVersion));
+            }
+        }
+
+        public int BatteryStateRaw
+        {
+            get { return _batteryStateRaw; }
+            private set
+            {
+                if (_batteryStateRaw == value)
+                {
+                    return;
+                }
+
+                _batteryStateRaw = value;
+                OnPropertyChanged(nameof(BatteryStateRaw));
+            }
+        }
+
+        public int BatteryFlagsRaw
+        {
+            get { return _batteryFlagsRaw; }
+            private set
+            {
+                if (_batteryFlagsRaw == value)
+                {
+                    return;
+                }
+
+                _batteryFlagsRaw = value;
+                OnPropertyChanged(nameof(BatteryFlagsRaw));
+            }
+        }
+
         private async Task ConnectAsync()
         {
             if (string.IsNullOrWhiteSpace(SelectedPort))
@@ -435,6 +527,7 @@ namespace BmsHostUi.ViewModels
             }
 
             await _modbusService.ConnectAsync(SelectedPort, BaudRate, (byte)SlaveId, CancellationToken.None);
+            UpdateConnectionState();
             RaiseCommandState();
         }
 
@@ -507,8 +600,12 @@ namespace BmsHostUi.ViewModels
             }
 
             await _modbusService.DisconnectAsync();
+            FirmwareVersion = "N/A";
+            BatteryStateRaw = 0;
+            BatteryFlagsRaw = 0;
             RaiseCommandState();
             SetStatus(L("MsgDisconnected", "Disconnected."));
+                UpdateConnectionState();
         }
 
         private async Task StopAsync()
@@ -531,6 +628,21 @@ namespace BmsHostUi.ViewModels
                 long raw = DecodeByType(LiveMap[i].Type, data[i]);
                 rawValues[i] = raw;
                 numericValues[i] = raw;
+            }
+
+            if (TryGetRawByName(rawValues, "FW_VER", out var fwRaw))
+            {
+                FirmwareVersion = fwRaw.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (TryGetRawByName(rawValues, "BATTERY_STATE", out var stateRaw))
+            {
+                BatteryStateRaw = unchecked((byte)stateRaw);
+            }
+
+            if (TryGetRawByName(rawValues, "BATTERY_FLAGS", out var flagsRaw))
+            {
+                BatteryFlagsRaw = unchecked((byte)flagsRaw);
             }
 
             UpdateSeriesHistory(numericValues);
@@ -569,6 +681,24 @@ namespace BmsHostUi.ViewModels
 
             _csvLoggerService.AppendRows(CsvPath, rows);
             SetStatus(LF("MsgLastPollFmt", "Last poll: {0}", now.ToString("HH:mm:ss")));
+        }
+
+        private static bool TryGetRawByName(long[] rawValues, string symbol, out long value)
+        {
+            value = 0;
+            if (rawValues == null || string.IsNullOrWhiteSpace(symbol))
+            {
+                return false;
+            }
+
+            int index = Array.FindIndex(LiveMap, item => string.Equals(item.Name, symbol, StringComparison.OrdinalIgnoreCase));
+            if (index < 0 || index >= rawValues.Length)
+            {
+                return false;
+            }
+
+            value = rawValues[index];
+            return true;
         }
 
         public void SetSelectedRegisters(IEnumerable<RegisterSelectionItem> leftItems, IEnumerable<RegisterSelectionItem> rightItems)
@@ -775,21 +905,66 @@ namespace BmsHostUi.ViewModels
 
         private Task LoadDfFromCsvAsync()
         {
-            var path = (DfCsvPath ?? string.Empty).Trim();
-            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                throw new InvalidOperationException(L("ErrDfCsvNotFound", "DF CSV file not found."));
+                var dialog = new OpenFileDialog
+                {
+                    Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
+                    DefaultExt = ".csv",
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    FileName = Path.GetFileName(string.IsNullOrWhiteSpace(DfCsvPath) ? "params_table.csv" : DfCsvPath)
+                };
+
+                string dir = Path.GetDirectoryName(DfCsvPath);
+                if (!string.IsNullOrWhiteSpace(dir) && Directory.Exists(dir))
+                {
+                    dialog.InitialDirectory = dir;
+                }
+
+                if (dialog.ShowDialog() != true)
+                {
+                    var canceled = L("MsgDfCsvLoadCanceled", "Load CSV canceled.");
+                    DfCsvStatusText = canceled;
+                    SetStatus(canceled);
+                    return;
+                }
+
+                var selectedPath = dialog.FileName;
+                var newRows = LoadDataFlashDefinitionsFromPath(selectedPath);
+                if (newRows.Count == 0)
+                {
+                    var empty = L("ErrDfCsvEmpty", "DF CSV is empty or no valid rows.");
+                    DfCsvStatusText = empty;
+                    SetStatus(empty);
+                    return;
+                }
+
+                ParameterRows.Clear();
+                foreach (var row in newRows)
+                {
+                    ParameterRows.Add(row);
+                }
+
+                DfCsvPath = selectedPath;
+                ParameterRowsView.Refresh();
+                var loaded = LF("MsgDfCsvLoadedFmt", "DF CSV loaded: {0} items.", newRows.Count);
+                DfCsvStatusText = loaded;
+                SetStatus(loaded);
+            });
+
+            return Task.CompletedTask;
+        }
+
+        private List<ParameterRow> LoadDataFlashDefinitionsFromPath(string path)
+        {
+            var defs = new List<ParameterRow>();
+            if (!File.Exists(path))
+            {
+                return defs;
             }
 
-            var lines = File.ReadAllLines(path);
-            if (lines.Length <= 1)
-            {
-                throw new InvalidOperationException(L("ErrDfCsvEmpty", "DF CSV is empty."));
-            }
-
-            var byName = ParameterRows.ToDictionary(r => r.Name, StringComparer.OrdinalIgnoreCase);
-            int loaded = 0;
-            foreach (var line in lines.Skip(1))
+            foreach (var line in File.ReadAllLines(path).Skip(1))
             {
                 if (string.IsNullOrWhiteSpace(line))
                 {
@@ -802,34 +977,96 @@ namespace BmsHostUi.ViewModels
                     continue;
                 }
 
-                var symbol = parts[0].Trim();
-                var type = parts[2].Trim().ToUpperInvariant();
-                var rawText = parts[3].Trim();
-
-                if (!byName.TryGetValue(symbol, out var row))
+                string symbol = parts[0].Trim();
+                if (symbol.StartsWith("NOF_", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
 
-                row.Type = type;
-                row.Value = ParseValueByType(type, rawText);
-                row.ValueText = FormatDisplayValue(row.Type, row.Value);
-                loaded++;
+                if (!TryParseAddress(parts[1].Trim(), out ushort address))
+                {
+                    continue;
+                }
+
+                if (address >= 0x8000)
+                {
+                    continue;
+                }
+
+                string type = NormalizeType(parts[2]);
+                long value = ParseValueByType(type, parts[3]);
+                defs.Add(new ParameterRow
+                {
+                    Name = symbol,
+                    Address = address,
+                    Type = type,
+                    Value = value,
+                    ValueText = FormatDisplayValue(type, value),
+                });
             }
 
-            SetStatus(LF("MsgDfCsvLoadedFmt", "DF CSV loaded: {0} items.", loaded));
-            return Task.CompletedTask;
+            return defs.OrderBy(d => d.Address).ToList();
         }
 
         private Task SaveDfToCsvAsync()
         {
-            var path = (DfCsvPath ?? string.Empty).Trim();
-            if (string.IsNullOrWhiteSpace(path))
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                throw new InvalidOperationException(L("ErrDfCsvPathRequired", "Please provide DF CSV path."));
-            }
+                var path = (DfCsvPath ?? string.Empty).Trim();
 
-            var dir = Path.GetDirectoryName(path);
+                // Check if file exists and prompt for overwrite
+                if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
+                {
+                    var result = MessageBox.Show(
+                        L("MsgDfCsvOverwriteConfirm", "File already exists. Do you want to overwrite it?"),
+                        L("TitleDfCsvConfirm", "Save CSV"),
+                        MessageBoxButton.YesNoCancel,
+                        MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        SaveDfCsvFile(path);
+                        return;
+                    }
+                    else if (result == MessageBoxResult.Cancel)
+                    {
+                        return;
+                    }
+                }
+
+                var dialog = new SaveFileDialog
+                {
+                    Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
+                    DefaultExt = ".csv",
+                    AddExtension = true,
+                    FileName = Path.GetFileName(string.IsNullOrWhiteSpace(DfCsvPath) ? "params_table.csv" : DfCsvPath)
+                };
+
+                string dir = Path.GetDirectoryName(DfCsvPath);
+                if (!string.IsNullOrWhiteSpace(dir) && Directory.Exists(dir))
+                {
+                    dialog.InitialDirectory = dir;
+                }
+
+                if (dialog.ShowDialog() == true)
+                {
+                    SaveDfCsvFile(dialog.FileName);
+                }
+
+                if (string.IsNullOrWhiteSpace(DfCsvPath))
+                {
+                    var canceled = L("MsgDfCsvSaveCanceled", "Save CSV canceled.");
+                    DfCsvStatusText = canceled;
+                    SetStatus(canceled);
+                }
+            });
+
+            return Task.CompletedTask;
+        }
+
+        private void SaveDfCsvFile(string targetPath)
+        {
+            var dir = Path.GetDirectoryName(targetPath);
             if (!string.IsNullOrWhiteSpace(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -852,9 +1089,11 @@ namespace BmsHostUi.ViewModels
                     FormatValueByType(row.Type, row.Value)));
             }
 
-            File.WriteAllLines(path, lines);
-            SetStatus(LF("MsgDfCsvSavedFmt", "DF CSV saved: {0}", path));
-            return Task.CompletedTask;
+            File.WriteAllLines(targetPath, lines);
+            DfCsvPath = targetPath;
+            var saved = LF("MsgDfCsvSavedFmt", "DF CSV saved: {0}", targetPath);
+            DfCsvStatusText = saved;
+            SetStatus(saved);
         }
 
         private Task LoadLogForPlotAsync()
@@ -941,6 +1180,21 @@ namespace BmsHostUi.ViewModels
                     LiveRows[i].ValueText = FormatDisplayValue(LiveMap[i].Type, raw);
                     LiveRows[i].Timestamp = lastTs == DateTime.MinValue ? DateTime.Now : lastTs;
                 }
+
+                if (TryGetLastRawByName(lastRaw, "FW_VER", out var fwRaw))
+                {
+                    FirmwareVersion = fwRaw.ToString(CultureInfo.InvariantCulture);
+                }
+
+                if (TryGetLastRawByName(lastRaw, "BATTERY_STATE", out var stateRaw))
+                {
+                    BatteryStateRaw = unchecked((byte)stateRaw);
+                }
+
+                if (TryGetLastRawByName(lastRaw, "BATTERY_FLAGS", out var flagsRaw))
+                {
+                    BatteryFlagsRaw = unchecked((byte)flagsRaw);
+                }
             });
 
             SetStatus(LF("MsgLogLoadedFmt", "Live log loaded for plot: {0}", path));
@@ -968,6 +1222,23 @@ namespace BmsHostUi.ViewModels
                 default:
                     return value16;
             }
+        }
+
+        private static bool TryGetLastRawByName(IReadOnlyDictionary<int, long> lastRaw, string symbol, out long value)
+        {
+            value = 0;
+            if (lastRaw == null || string.IsNullOrWhiteSpace(symbol))
+            {
+                return false;
+            }
+
+            int index = Array.FindIndex(LiveMap, item => string.Equals(item.Name, symbol, StringComparison.OrdinalIgnoreCase));
+            if (index < 0)
+            {
+                return false;
+            }
+
+            return lastRaw.TryGetValue(index, out value);
         }
 
         private async Task WriteParameterValueAsync(ParameterRow row, CancellationToken cancellationToken)
@@ -1273,55 +1544,7 @@ namespace BmsHostUi.ViewModels
 
         private IEnumerable<ParameterRow> LoadDataFlashDefinitions()
         {
-            var defs = new List<ParameterRow>();
-            string templatePath = ResolveTemplateCsvPath();
-            if (!File.Exists(templatePath))
-            {
-                return defs;
-            }
-
-            foreach (var line in File.ReadAllLines(templatePath).Skip(1))
-            {
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-
-                var parts = line.Split(',');
-                if (parts.Length < 4)
-                {
-                    continue;
-                }
-
-                string symbol = parts[0].Trim();
-                if (symbol.StartsWith("NOF_", StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                if (!TryParseAddress(parts[1].Trim(), out ushort address))
-                {
-                    continue;
-                }
-
-                if (address >= 0x8000)
-                {
-                    continue;
-                }
-
-                string type = NormalizeType(parts[2]);
-                long defaultValue = ParseValueByType(type, parts[3]);
-                defs.Add(new ParameterRow
-                {
-                    Name = symbol,
-                    Address = address,
-                    Type = type,
-                    Value = defaultValue,
-                    ValueText = FormatDisplayValue(type, defaultValue),
-                });
-            }
-
-            return defs.OrderBy(d => d.Address).ToArray();
+            return LoadDataFlashDefinitionsFromPath(ResolveTemplateCsvPath());
         }
 
         private static bool TryParseAddress(string text, out ushort address)
@@ -1547,8 +1770,7 @@ namespace BmsHostUi.ViewModels
         {
             void Raise()
             {
-                (ConnectCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (DisconnectCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                (ConnectToggleCommand as RelayCommand)?.RaiseCanExecuteChanged();
                 (StartCommand as RelayCommand)?.RaiseCanExecuteChanged();
                 (StopCommand as RelayCommand)?.RaiseCanExecuteChanged();
                 (ReadParamsCommand as RelayCommand)?.RaiseCanExecuteChanged();
@@ -1577,6 +1799,12 @@ namespace BmsHostUi.ViewModels
             {
                 Application.Current.Dispatcher.Invoke(Raise);
             }
+        }
+
+        private void UpdateConnectionState()
+        {
+            ConnectButtonText = _modbusService.IsConnected ? "Disconnect" : "Connect";
+            (ConnectToggleCommand as RelayCommand)?.RaiseCanExecuteChanged();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
