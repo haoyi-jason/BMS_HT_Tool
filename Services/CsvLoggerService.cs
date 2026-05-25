@@ -17,11 +17,6 @@ namespace BmsHostUi.Services
                 Directory.CreateDirectory(directory);
             }
 
-            if (File.Exists(path) && !overwrite)
-            {
-                throw new IOException("CSV already exists and overwrite is disabled: " + path);
-            }
-
             if (!File.Exists(path) || overwrite)
             {
                 File.WriteAllText(path, "Timestamp,Name,Address,Value,Unit" + Environment.NewLine, Encoding.UTF8);

@@ -57,7 +57,7 @@
 
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="StatusIdle">Idle</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgSelectCom">Please select COM port.</sys:String>
-  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCsvOverwriteConfirm">CSV already exists. Overwrite it?</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCsvOverwriteConfirm">CSV already exists. Yes=Overwrite, No=Append, Cancel=Abort.</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleCsvConfirm">CSV Confirm</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgStartCanceled">Start canceled by user.</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingStarted">Polling started.</sys:String>

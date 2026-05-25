@@ -542,14 +542,18 @@ namespace BmsHostUi.ViewModels
             if (System.IO.File.Exists(CsvPath))
             {
                 var result = MessageBox.Show(
-                    L("MsgCsvOverwriteConfirm", "CSV already exists. Overwrite it?"),
+                    L("MsgCsvOverwriteConfirm", "CSV already exists. Yes=Overwrite, No=Append, Cancel=Abort."),
                     L("TitleCsvConfirm", "CSV Confirm"),
-                    MessageBoxButton.YesNo,
+                    MessageBoxButton.YesNoCancel,
                     MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     overwrite = true;
+                }
+                else if (result == MessageBoxResult.No)
+                {
+                    overwrite = false;
                 }
                 else
                 {
@@ -994,6 +998,11 @@ namespace BmsHostUi.ViewModels
                 }
 
                 string type = NormalizeType(parts[2]);
+                if ((address == 0x6000 || address == 0x2004) && string.Equals(symbol, "BATTERY_CAPACITY", StringComparison.OrdinalIgnoreCase) && type == "F32")
+                {
+                    // Firmware stores this field as raw integer mAh in a 32-bit slot.
+                    type = "U32";
+                }
                 long value = ParseValueByType(type, parts[3]);
                 defs.Add(new ParameterRow
                 {

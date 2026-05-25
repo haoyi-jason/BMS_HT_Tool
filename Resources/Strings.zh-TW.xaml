@@ -57,7 +57,7 @@
 
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="StatusIdle">待命</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgSelectCom">請先選擇 COM 埠。</sys:String>
-  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCsvOverwriteConfirm">CSV 已存在，是否覆蓋？</sys:String>
+  <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgCsvOverwriteConfirm">CSV 已存在。是=覆蓋，否=附加，取消=中止。</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="TitleCsvConfirm">CSV 確認</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgStartCanceled">使用者已取消啟動。</sys:String>
   <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="MsgPollingStarted">輪詢已開始。</sys:String>
